@@ -9,15 +9,28 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+@*<div class="card-columns">
+    @foreach (var item in Model)
+    {
+    <div class="card">
+        <div class="card-body">
+            <div class="card-img" src="@item.ImageUrl" style="height: auto; width: auto;"></div>
+            <h5 class="card-title"> @item.Name </h5>
+        </div>
+    </div>
+    }
+</div>*@
+
 <table class="table">
     <thead>
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <p>Walker Name</p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NeighborhoodId)
+                <p>Neighborhood Name</p>
             </th>
             <th></th>
         </tr>
@@ -32,7 +45,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NeighborhoodId)
+                @Html.DisplayFor(modelItem => item.Neighborhood.Name)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
