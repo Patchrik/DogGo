@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Parker's PC\\workspace\\csharp\\DogGo\\DogGo\\DogGo.csproj": {}
+    "C:\\Users\\Parker's PC\\workspace\\csharp\\doggo\\DogGo\\DogGo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Parker's PC\\workspace\\csharp\\DogGo\\DogGo\\DogGo.csproj": {
+    "C:\\Users\\Parker's PC\\workspace\\csharp\\doggo\\DogGo\\DogGo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Parker's PC\\workspace\\csharp\\DogGo\\DogGo\\DogGo.csproj",
+        "projectUniqueName": "C:\\Users\\Parker's PC\\workspace\\csharp\\doggo\\DogGo\\DogGo.csproj",
         "projectName": "DogGo",
-        "projectPath": "C:\\Users\\Parker's PC\\workspace\\csharp\\DogGo\\DogGo\\DogGo.csproj",
+        "projectPath": "C:\\Users\\Parker's PC\\workspace\\csharp\\doggo\\DogGo\\DogGo.csproj",
         "packagesPath": "C:\\Users\\Parker's PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Parker's PC\\workspace\\csharp\\DogGo\\DogGo\\obj\\",
+        "outputPath": "C:\\Users\\Parker's PC\\workspace\\csharp\\doggo\\DogGo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Parker's PC\\AppData\\Roaming\\NuGet\\NuGet.Config",

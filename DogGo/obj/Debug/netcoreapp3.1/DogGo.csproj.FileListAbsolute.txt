@@ -118,3 +118,6 @@ C:\Users\Parker's PC\workspace\csharp\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\
 C:\Users\Parker's PC\workspace\csharp\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Walkers\Details.cshtml.g.cs
 C:\Users\Parker's PC\workspace\csharp\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Details.cshtml.g.cs
 C:\Users\Parker's PC\workspace\csharp\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Index.cshtml.g.cs
+C:\Users\Parker's PC\workspace\csharp\doggo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Create.cshtml.g.cs
+C:\Users\Parker's PC\workspace\csharp\doggo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Delete.cshtml.g.cs
+C:\Users\Parker's PC\workspace\csharp\doggo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Edit.cshtml.g.cs
