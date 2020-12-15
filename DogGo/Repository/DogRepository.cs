@@ -47,9 +47,47 @@ namespace DogGo.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                            //Notes = reader.GetString(reader.GetOrdinal("Notes")),
                             Notes = ReaderUtils.check4NullString(reader, "Notes"),
-                            //ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
+                            ImageUrl = ReaderUtils.check4NullString(reader, "ImageUrl")
+
+                        };
+
+                        dogs.Add(dog);
+                    }
+
+                    reader.Close();
+
+                    return dogs;
+                }
+            }
+        }
+        public List<Dog> GetDogsByOwnerId(int ownerId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, [Name], OwnerId, Breed, Notes, ImageUrl 
+                        FROM Dog
+                        WHERE OwnerId = @ownerId;
+                    ";
+
+                    cmd.Parameters.AddWithValue("@ownerId", ownerId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<Dog> dogs = new List<Dog>();
+                    while (reader.Read())
+                    {
+                        Dog dog = new Dog
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
+                            Breed = reader.GetString(reader.GetOrdinal("Breed")),
+                            Notes = ReaderUtils.check4NullString(reader, "Notes"),
                             ImageUrl = ReaderUtils.check4NullString(reader, "ImageUrl")
                         };
 
@@ -87,9 +125,7 @@ namespace DogGo.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                            //Notes = reader.GetString(reader.GetOrdinal("Notes")),
                             Notes = ReaderUtils.check4NullString(reader, "Notes"),
-                            //ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                             ImageUrl = ReaderUtils.check4NullString(reader, "ImageUrl")
                         };
 
@@ -121,8 +157,8 @@ namespace DogGo.Repositories
                     cmd.Parameters.AddWithValue("@name", dog.Name);
                     cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
                     cmd.Parameters.AddWithValue("@breed", dog.Breed);
-                    cmd.Parameters.AddWithValue("@notes", dog.Notes);
-                    cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl);
+                    cmd.Parameters.AddWithValue("@notes", ReaderUtils.GetNullableParam(dog.Notes));
+                    cmd.Parameters.AddWithValue("@imageUrl", ReaderUtils.GetNullableParam(dog.ImageUrl));
 
                     int id = (int)cmd.ExecuteScalar();
 
@@ -147,12 +183,12 @@ namespace DogGo.Repositories
                                         Notes = @notes, 
                                         ImageUrl = @imageUrl
                                         WHERE Id = @id";
-
+                    
                     cmd.Parameters.AddWithValue("@name", dog.Name);
                     cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
                     cmd.Parameters.AddWithValue("@breed", dog.Breed);
-                    cmd.Parameters.AddWithValue("@notes", dog.Notes);
-                    cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl);
+                    cmd.Parameters.AddWithValue("@notes", ReaderUtils.GetNullableParam(dog.Notes));
+                    cmd.Parameters.AddWithValue("@imageUrl", ReaderUtils.GetNullableParam(dog.ImageUrl));
                     cmd.Parameters.AddWithValue("@id", dog.Id);
 
                     cmd.ExecuteNonQuery();
