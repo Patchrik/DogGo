@@ -144,25 +144,24 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    INSERT INTO Dog ([Name], OwnerId, Breed, Notes, ImageUrl)
+                    INSERT INTO Walks (Date, Duration, WalkerId, DogId)
                     OUTPUT INSERTED.ID
-                    VALUES (@name, @ownerId, @breed, @notes, @imageUrl);
+                    VALUES (@date, @duration, @walkerId, @dogId);
 
                 ";
 
-                    cmd.Parameters.AddWithValue("@name", dog.Name);
-                    cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
-                    cmd.Parameters.AddWithValue("@breed", dog.Breed);
-                    cmd.Parameters.AddWithValue("@notes", ReaderUtils.GetNullableParam(dog.Notes));
-                    cmd.Parameters.AddWithValue("@imageUrl", ReaderUtils.GetNullableParam(dog.ImageUrl));
+                    cmd.Parameters.AddWithValue("@date", walk.Date);
+                    cmd.Parameters.AddWithValue("@duration", walk.Duration);
+                    cmd.Parameters.AddWithValue("@walkerId", walk.WalkerId);
+                    cmd.Parameters.AddWithValue("@dogId", walk.DogId);
 
                     int id = (int)cmd.ExecuteScalar();
 
-                    dog.Id = id;
+                    walk.Id = id;
                 }
             }
         }
-        public void UpdateDog(Dog dog)
+        public void UpdateWalk(Walks walk)
         {
             using (SqlConnection conn = Connection)
             {
@@ -171,27 +170,25 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        UPDATE Dog
+                                        UPDATE Walks
                                         SET 
-                                        [Name] = @name, 
-                                        OwnerId = @ownerId,
-                                        Breed = @breed, 
-                                        Notes = @notes, 
-                                        ImageUrl = @imageUrl
+                                        Date = @date, 
+                                        Duration = @duration,
+                                        WalkerId = @walkerId, 
+                                        DogId = @dogId
                                         WHERE Id = @id";
                     
-                    cmd.Parameters.AddWithValue("@name", dog.Name);
-                    cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
-                    cmd.Parameters.AddWithValue("@breed", dog.Breed);
-                    cmd.Parameters.AddWithValue("@notes", ReaderUtils.GetNullableParam(dog.Notes));
-                    cmd.Parameters.AddWithValue("@imageUrl", ReaderUtils.GetNullableParam(dog.ImageUrl));
-                    cmd.Parameters.AddWithValue("@id", dog.Id);
+                    cmd.Parameters.AddWithValue("@date", walk.Date);
+                    cmd.Parameters.AddWithValue("@duration", walk.Duration);
+                    cmd.Parameters.AddWithValue("@walkerId", walk.WalkerId);
+                    cmd.Parameters.AddWithValue("@dogId", walk.DogId);
+                    cmd.Parameters.AddWithValue("@id", walk.Id);
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-        public void DeleteDog(int dogId)
+        public void DeleteWalk(int walkId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -200,11 +197,11 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            DELETE FROM Dog
+                            DELETE FROM Walks
                             WHERE Id = @id
                         ";
 
-                    cmd.Parameters.AddWithValue("@id", dogId);
+                    cmd.Parameters.AddWithValue("@id", walkId);
 
                     cmd.ExecuteNonQuery();
                 }

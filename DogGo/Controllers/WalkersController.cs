@@ -1,4 +1,5 @@
 ﻿using DogGo.Models;
+using DogGo.Models.ViewModels;
 using DogGo.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,14 @@ namespace DogGo.Controllers
     public class WalkersController : Controller
     {
         private readonly WalkerRepository _walkerRepo;
+        private readonly WalksRepository _walksRepo;
+        private readonly DogRepository _dogRepo;
 
         public WalkersController(IConfiguration config)
         {
             _walkerRepo = new WalkerRepository(config);
+            _walksRepo = new WalksRepository(config);
+            _dogRepo = new DogRepository(config);
         }
 
         // GET: WalkersController
@@ -30,13 +35,24 @@ namespace DogGo.Controllers
         public ActionResult Details(int id)
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
+            List<Walks> walks = _walksRepo.GetWalksByWalkerId(id);
+            List<Dog> dogs = _dogRepo.GetAllDogs();
+
 
             if (walker == null)
             {
                 return NotFound();
             }
-
-            return View(walker);
+            else
+            {
+                WalkerProfileViewModel vm = new WalkerProfileViewModel()
+                {
+                    Walker = walker,
+                    Walks = walks,
+                    Dogs = dogs
+                };
+                return View(vm);
+            }
         }
 
         // GET: WalkersController/Create
