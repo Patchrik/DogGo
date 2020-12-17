@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DogGo.Controllers
@@ -16,19 +17,45 @@ namespace DogGo.Controllers
         private readonly WalkerRepository _walkerRepo;
         private readonly WalksRepository _walksRepo;
         private readonly DogRepository _dogRepo;
+        private readonly OwnerRepository _ownerRepo;
 
         public WalkersController(IConfiguration config)
         {
             _walkerRepo = new WalkerRepository(config);
             _walksRepo = new WalksRepository(config);
             _dogRepo = new DogRepository(config);
+            _ownerRepo = new OwnerRepository(config);
+        }
+        //This is the a helper method to go and grab the current user's id
+        private int GetCurrentUserId()
+        {
+            try
+            {
+                string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return int.Parse(id);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            
         }
 
         // GET: WalkersController
         public ActionResult Index()
         {
-            List<Walker> walkers = _walkerRepo.GetAllWalkers();
-            return View(walkers);
+            if (User.Identity.IsAuthenticated)
+            {
+                Owner currentUser = _ownerRepo.GetOwnerById(GetCurrentUserId());
+                List<Walker> localWalkers = _walkerRepo.GetWalkersInNeighborhood(currentUser.NeighborhoodId);
+                return View(localWalkers);
+            }
+            else
+            {
+                List<Walker> walkers = _walkerRepo.GetAllWalkers();
+                return View(walkers);
+            }
+            
         }
 
         // GET: WalkersController/Details/5
